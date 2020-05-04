@@ -1,21 +1,26 @@
 References
 
 ######################################################################################################################################
-[1] Takuya Akiba, Yoichi Iwata, and Yuichi Yoshida. Dynamic and historical shortest-path distance queries on large evolving networks by pruned landmark labeling. In 23rd International World Wide Web Conference, WWW ’14, Seoul, Republic of Korea, April 7-11, 2014, pages 237–248, 2014.
+[1] (PAPER) Takuya Akiba, Yoichi Iwata, and Yuichi Yoshida. Dynamic and historical shortest-path distance queries on large evolving 
+networks by pruned landmark labeling. In 23rd International World Wide Web Conference, WWW ’14, Seoul, Republic of Korea, 
+April 7-11, 2014, pages 237–248, 2014.
 
 url: https://dl.acm.org/doi/pdf/10.1145/2566486.2568007
 Insights: 
 1) They propose a dynamic indexing scheme for queries on the last snapshot.
-2) They designed another dynamic indexing scheme that can also answer two kinds of historical queries with regard to not only the latest snapshot but also previous snapshots.
-3) The methods can construct indices from large graphs with millions of vertices, answer queries in microseconds, and update indices in milliseconds.
+2) They designed another dynamic indexing scheme that can also answer two kinds of historical queries with regard to not only 
+the latest snapshot but also previous snapshots.
+3) The methods can construct indices from large graphs with millions of vertices, answer queries in microseconds, and update 
+indices in milliseconds.
 4) Experiments on real and synthetic evolving networks.
 
 Type of queries: 1. shortest path between two vertices, 2. distance between two vertices (indicates the closeness of the two users)
 
-They assume the following two scenarios: 1. ask only contemporary queries: last snapshot
-										 2. ask historical queries: previous snapshots
+They assume the following two scenarios: 1. ask only contemporary queries: last snapshot 2. ask historical queries: previous snapshots
 
-Assumptions: undirected unweighted graphs and consider only distance queries but supporting directed and/or weighted graphs and shortest-path queries is discussed. Also, when we assume a dynamic graph, we ignore removals (widely used). The newly inserted vertex is isolated. They choose vertices by the decreasing order of degrees.
+Assumptions: undirected unweighted graphs and consider only distance queries but supporting directed and/or weighted graphs 
+and shortest-path queries is discussed. Also, when we assume a dynamic graph, we ignore removals (widely used). The newly 
+inserted vertex is isolated. They choose vertices by the decreasing order of degrees.
 
 Problem definition: 
 	Problem 1 (Contemporary Distance Query):
@@ -30,25 +35,57 @@ Problem definition:
 	Given: Two query vertices s, t.
 	Answer: Set C(s, t) = {(τ 1 , δ 1 ), (τ 2 , δ 2 ), . . .} where (τ i , δ i ) ∈ C(s, t) if and only if δ i = d τ i (s, t) 6 = d τ i −1 (s, t).
 
-Contemporary Distance Query: The idea behind an efficient update algorithm is to carefully resume and stop pruned BFSs. They only add new label entries or rewrite distances of existing label entries. (Lemma 4.2) -> If the distance from vertex v k to vertex u has changed, then all the new shortest paths between them pass through the new edge (a, b). 
-Update Algorithm for Pruned Labeling: PrefixalQuery(s, t, M, k) = min {δ s + δ t | (v i , δ s ) ∈ M (s), (v i , δ t ) ∈ M (t), i ≤ k} the answer to the query between vertices s and t computed from the index M only using distances to vertices whose IDs are at most k.
+Contemporary Distance Query: The idea behind an efficient update algorithm is to carefully resume and stop pruned BFSs. They 
+only add new label entries or rewrite distances of existing label entries. (Lemma 4.2) -> If the distance from vertex v k to 
+vertex u has changed, then all the new shortest paths between them pass through the new edge (a, b). 
+Update Algorithm for Pruned Labeling: PrefixalQuery(s, t, M, k) = min {δ s + δ t | (v i , δ s ) ∈ M (s), (v i , δ t ) ∈ M (t), i ≤ k} 
+the answer to the query between vertices s and t computed from the index M only using distances to vertices whose IDs are at most k.
 
-Historical Distance Query: They start from an algorithm based on dynamic programming, next they turn the algorithm into a BFS-like algorithm, and then introduce pruning to the algorithm. 
+Historical Distance Query: They start from an algorithm based on dynamic programming, next they turn the algorithm into a 
+BFS-like algorithm, and then introduce pruning to the algorithm. 
 
-To efficiently answer not only distance but also the shortest path, they store parents of label entries in BFS trees, and ascend the trees from the two end points to restore the path.
+To efficiently answer not only distance but also the shortest path, they store parents of label entries in BFS trees, and 
+ascend the trees from the two end points to restore the path.
 ######################################################################################################################################
-
 ######################################################################################################################################
-[2] Renzo Angles, Marcelo Arenas, Pablo Barceló, Aidan Hogan, Juan L. Reutter, and Domagoj Vrgoc. Foundations of modern query languages for graph databases. ACM Comput. Surv., 50(5):68:1–68:40, 2017.
+######################################################################################################################################
+[2] (SURVEY) Renzo Angles, Marcelo Arenas, Pablo Barceló, Aidan Hogan, Juan L. Reutter, and Domagoj Vrgoc. Foundations of modern query 
+languages for graph databases. ACM Comput. Surv., 50(5):68:1–68:40, 2017.
 
-url: 
+url: https://dl.acm.org/doi/pdf/10.1145/3104031
 Insights: 
-######################################################################################################################################
+1) Firstly, they discuss two graph data models (Section 2): edge-labelled graphs, where nodes and edges in labelled graphs can be annotated 
+with additional meta-information. 
+2) (Section 3), they discuss graph patterns, where a graph-structured query is matched against the graph database. 
+3) (Section 4) introduces navigational expressions, can match paths of arbitrary length. 
 
-[3] Matthias Bender, Sebastian Michel, Peter Triantafillou, Gerhard Weikum, and Christian Zim-
-mer. MINERVA: collaborative P2P search. In Proceedings of the 31st International Confer-
-ence on Very Large Data Bases, Trondheim, Norway, August 30 - September 2, 2005, pages
-1263–1266, 2005.
+GRAPH DATA MODELS -->  
++ Edge-labelled graphs: A simple and widely adopted solution is the use of edge-labelled graphs, where we additionally assign labels
+ to edges that indicate the different types of relationships in the domain being described. An edge-labelled graph does not 
+ impose any particular restriction on the topology of graphs. Can encode complex information.
++ Property Graphs: Both edges and nodes can be labelled. 
+
+GRAPH PATTERNS -->
++ Query languages: SPARQL, Cypher, Gremlin
++ Basic Graph Patterns: a bgp for querying an edge-labelled graph is just an edge-labelled graph where variables can now appear 
+as nodes or edge labels.
++ Complex Graph Patterns: (bgps) cover the natural join, and selection based on equality. Cgp cover projection, union, difference,
+ optional, and filter (which covers selection). 
++ Path queries: x -> (knows) y. The output can be Boolean, Nodes, Paths, Graphs.
+
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[3] Matthias Bender, Sebastian Michel, Peter Triantafillou, Gerhard Weikum, and Christian Zimmer. MINERVA: collaborative 
+P2P search. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - 
+September 2, 2005, pages 1263–1266, 2005.
+
+url: https://dl.acm.org/doi/10.5555/1083592.1083744
+Insights:
+
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
 [4] Michele Berlingerio, Francesco Bonchi, Björn Bringmann, and Aristides Gionis. Mining
 graph evolution rules. In Machine Learning and Knowledge Discovery in Databases, Euro-
 pean Conference, ECML PKDD 2009, Bled, Slovenia, September 7-11, 2009, Proceedings,
