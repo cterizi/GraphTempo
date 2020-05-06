@@ -1,0 +1,47 @@
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[3] (SHORT PAPER) Matthias Bender, Sebastian Michel, Peter Triantafillou, Gerhard Weikum, and Christian Zimmer. MINERVA: collaborative 
+P2P search. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - 
+September 2, 2005, pages 1263–1266, 2005.
+--------------------------------------------------------------------------------------------------------------------------------------
+url: https://dl.acm.org/doi/10.5555/1083592.1083744
+Insights:
+1) This paper proposes the live demonstration of a prototype of MINERVA, a novel P2P Web search engine. The search engine is layered 
+on top of a DHT-based overlay network that connects an a-priori unlimited number of peers, each of which maintains a personal local
+database and a local search facility. Each peer posts a small amount of metadata to a physically distributed directory that is 
+used to efficiently select promising peers from across the peer population that can best locally execute a query.
+
+!!! Continue reading !!!
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[5] (PAPER) Tobias Bleifuß, Leon Bornemann, Theodore Johnson, Dmitri V. Kalashnikov, Felix Naumann, and Divesh Srivastava. 
+Exploring change  - A new dimension of data analytics. PVLDB, 12(2):85–98, 2018.
+--------------------------------------------------------------------------------------------------------------------------------------
+url: https://dl.acm.org/doi/10.14778/3282495.3282496
+Insights: 
+1) They propose a model to capture change and the process of exploring dynamic data (metadata) to identify salient changes.
+2) For a given, dynamic dataset, efficiently identify, quantify, and summarize changes in data at (1) value, (2) aggregate, and 
+(3) schema-level, and support users to effectively and interactively explore this change. 
+
+Scenario 1: Explore value disagreement (Wikipedia’s infoboxes): an editor is interested in discovering topical controversies in Wikipedia. 
+Scenario 2: Explore schema changes: identify both systematic and gradual changes in schema (ensure a common vocabulary). 
+Scenario 3: Explore dynamics: the relevancy or interestingness of a data item is related to the number of updates it experiences. 
+Scenario 4: Time-correlated change-events: The change of values (Boolean value not numeric) in one property happens (frequently) in 
+close time-proximity to changes in another property of the same entity (easy) or a different one. 
+
+Challenge 1. How can we model and explore data and schema change for a variety of different input sources and for many different 
+intended uses in an efficient and effective interactive fashion? (architectural overview)
+
+MODELING CHANGE -->
++ The Change-Cube: A generic model to represent changes to a dataset. It includes four dimensions to represent when (time) 
+what (entity, id) changed where (property) and how (new value). (timestamp, id, property) is the key.
++ Populating the change-cube: how the changes are stored in the real-world. all changes happened at once. have to find a way to 
+calculate the difference between two consecutive dumps. 
+	+ Dealing with timestamps: • Transaction time is the time when the change entered the database, optionally marked with a timestamp. 
+	• Valid time is the time recorded for a record and stored in the database. An example is the release date of an album. 
+	+ Modeling decisions: 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
