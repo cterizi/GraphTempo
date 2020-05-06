@@ -4,7 +4,7 @@ References
 [1] (PAPER) Takuya Akiba, Yoichi Iwata, and Yuichi Yoshida. Dynamic and historical shortest-path distance queries on large evolving 
 networks by pruned landmark labeling. In 23rd International World Wide Web Conference, WWW ’14, Seoul, Republic of Korea, 
 April 7-11, 2014, pages 237–248, 2014.
-
+--------------------------------------------------------------------------------------------------------------------------------------
 url: https://dl.acm.org/doi/pdf/10.1145/2566486.2568007
 Insights: 
 1) They propose a dynamic indexing scheme for queries on the last snapshot.
@@ -51,7 +51,7 @@ ascend the trees from the two end points to restore the path.
 ######################################################################################################################################
 [2] (SURVEY) Renzo Angles, Marcelo Arenas, Pablo Barceló, Aidan Hogan, Juan L. Reutter, and Domagoj Vrgoc. Foundations of modern query 
 languages for graph databases. ACM Comput. Surv., 50(5):68:1–68:40, 2017.
-
+--------------------------------------------------------------------------------------------------------------------------------------
 url: https://dl.acm.org/doi/pdf/10.1145/3104031
 Insights: 
 1) Firstly, they discuss two graph data models (Section 2): edge-labelled graphs, where nodes and edges in labelled graphs can be annotated 
@@ -76,26 +76,50 @@ as nodes or edge labels.
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[3] Matthias Bender, Sebastian Michel, Peter Triantafillou, Gerhard Weikum, and Christian Zimmer. MINERVA: collaborative 
-P2P search. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - 
-September 2, 2005, pages 1263–1266, 2005.
-
-url: https://dl.acm.org/doi/10.5555/1083592.1083744
-Insights:
-
-######################################################################################################################################
-######################################################################################################################################
-######################################################################################################################################
-[4] Michele Berlingerio, Francesco Bonchi, Björn Bringmann, and Aristides Gionis. Mining
-graph evolution rules. In Machine Learning and Knowledge Discovery in Databases, Euro-
-pean Conference, ECML PKDD 2009, Bled, Slovenia, September 7-11, 2009, Proceedings,
+[4] (PAPER) Michele Berlingerio, Francesco Bonchi, Björn Bringmann, and Aristides Gionis. Mining graph evolution rules. In Machine Learning 
+and Knowledge Discovery in Databases, European Conference, ECML PKDD 2009, Bled, Slovenia, September 7-11, 2009, Proceedings, 
 Part I, pages 115–130, 2009.
-[5] Tobias Bleifuß, Leon Bornemann, Theodore Johnson, Dmitri V. Kalashnikov, Felix Nau-
-mann, and Divesh Srivastava. Exploring change - A new dimension of data analytics. PVLDB,
-12(2):85–98, 2018.
-[6] Petko Bogdanov, Misael Mongiovì, and Ambuj K. Singh. Mining heavy subgraphs in time-
-evolving networks. In 11th IEEE International Conference on Data Mining, ICDM 2011,
-Vancouver, BC, Canada, December 11-14, 2011, pages 81–90, 2011.
+--------------------------------------------------------------------------------------------------------------------------------------
+url: https://link.springer.com/content/pdf/10.1007/978-3-642-04180-8_25.pdf
+Insights: 
+1) Given a sequence of snapshots of an evolving graph, they aim at discovering rules describing the local changes occurring in it.
+2) Extract patterns (structural changes in dynamic graphs) whose frequency is larger than a minimum support threshold.
+
+Patterns of Graph Evolution -->
++ Time-Evolving Graphs: To each edge e = (u, v) a time-stamp t(e) = arg min j {E j | e ∈ E j } is assigned (first appearance).
++ Patterns: a pattern P of G is a (connected)subgraph of G that in addition to matching edges of G also matches their timestamps, 
+and if present, the properties on the nodes and edges of G.
+	+ Absolute-time pattern: we are not interested in patterns where all edges have the same timestamp.
+	+ Relative-time Pattern: They obtain naturally forming equivalence classes of structurally isomorphic relative time patterns 
+	that differ only by a constant on their edge time-stamps.
++ Support metric: support of the pattern P in the host-graph G. Property: G, P and P', where P is a subgraph of P', it must hold 
+that σ(P, G) ≥ σ(P', G). It is closer to the real number of occurrences in the graph. How often an event may happen compared to 
+other specific changes.
++ Rules and Confidence Measure: how likely is a certain sequence of steps? Confidence for each transition. Each step can be 
+considered as a rule body→head with both body and head being patterns. 
+
+Questions -->
++ Q1. Do the extracted patterns and rules characterize the studied network? Yes, using the confidence of rules. No, using the support.
++ Q2. Do different time granularities influence the confidence of the rules? Rules that have higher weekly confidence than monthly.
++ Q3. How do the different confidence definitions compare? support-based confidence is a more appropriate measure to use.
++ Q4. How do the parameters and the type of dataset influence the number of derivable rules, the number of patterns obtained, 
+and the running time? rules extracted from a dataset with weekly granularity have higher confidence than rules extracted from a 
+dataset with yearly granularity. the number of extracted patterns grows as a function of the number of edges allowed in the pattern. 
+The running times are very different, the number of extracted patterns is almost the same. More edge labels allow for more patterns 
+to be found. Less edge labels allow patterns to be found more repeatedly. 
+
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[6] Petko Bogdanov, Misael Mongiovì, and Ambuj K. Singh. Mining heavy subgraphs in time-evolving networks. In 11th IEEE  International 
+Conference on Data Mining, ICDM 2011, Vancouver, BC, Canada, December 11-14, 2011, pages 81–90, 2011.
+--------------------------------------------------------------------------------------------------------------------------------------
+url: 
+Insights: 
+
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
 [7] HongYun Cai, Vincent W. Zheng, and Kevin Chen-Chuan Chang. A comprehensive survey of
 graph embedding: Problems, techniques, and applications. IEEE Trans. Knowl. Data Eng.,
 30(9):1616–1637, 2018.
