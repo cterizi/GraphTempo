@@ -114,7 +114,7 @@ to be found. Less edge labels allow patterns to be found more repeatedly.
 [6] Petko Bogdanov, Misael Mongiovì, and Ambuj K. Singh. Mining heavy subgraphs in time-evolving networks. In 11th IEEE  International 
 Conference on Data Mining, ICDM 2011, Vancouver, BC, Canada, December 11-14, 2011, pages 81–90, 2011.
 --------------------------------------------------------------------------------------------------------------------------------------
-url: 
+url: https://ieeexplore.ieee.org/document/6137212/
 Insights: 
 
 ######################################################################################################################################
