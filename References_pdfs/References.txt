@@ -249,7 +249,30 @@ New York, NY, USA, June 24, 2013, page 11, 2013.
 
 url: https://dl.acm.org/doi/pdf/10.1145/2484425.2484442
 Insights: 
+1) It is important to design solutions that allow rich queries that simultaneously involve the topology of the social network, temporal 
+information on the presence and interactions of individual nodes, and node metadata.
+2) Here we introduce a data model for time-varying social network data that can be represented as a property graph in the Neo4j graph database. 
+3) We use time-varying social network data collected by using wearable sensors and study the performance of real-world queries, pointing 
+to strengths, weaknesses and challenges of the proposed approach.
 
+Data (couple of people and sensors)
+For each pair of participants, the detailed sequence of their contacts, with beginning and ending times. 
+These data can be represented as time-varying proximity networks, obtained by temporally aggregating the raw data stream from the proximity 
+sensors over temporal frames of a given duration, here chosen as ∆t = 20s. For each consecutive time interval (frame) of duration ∆t we build 
+a proximity graph where nodes represent individuals, and edges represent proximity relations between individuals that were recorded during the corresponding frame. Within a frame, an interaction is considered active from the beginning of the frame to the end of the frame. In this 
+representation, interactions and actors appear or disappear at frame boundaries only.
+
+3. TECHNICAL CHALLENGES
+3.1 Modeling Time-Varying Networks -> adjacency matrices or adjacency lists allow to build specialized data processing pipelines, they have numerous limitations.
+3.2 Storage & Retrieval of Large Networks -> The topology of real-world graphs is heterogeneous. There are two main sources of heterogeneity: the first is the topological heterogeneity of the social networks we measure, the second is the temporal heterogeneity.
+
+4. DATA MODEL
+4.1 Time-Varying Social Network
+Edges as undirected and weighted (it generalizes to directed weighted edges and to multi-relational networks). We have to define the graph schema.
+
+4.2 Temporal indexing
++ They build a tree that explicitly represents the temporal hierarchy of the dataset. 
++ Each level is a timestamp such as year, month, week, day, hours 
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
