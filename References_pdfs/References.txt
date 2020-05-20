@@ -635,22 +635,43 @@ Sci., 64(4):820–842, 2002.
 
 url: shorturl.at/zAEJR
 Insights:
+1) The path "time-respecting" if the time labels on its edges are non-decreasing.
+2) How do the basic combinatorial and algorithmic properties of graphs change when we impose this additional temporal condition?
+3) Consider connectivity problems, in which we seek disjoint time-respecting paths between pairs of nodes. 
+4) Inference problems, in which we seek to reconstruct a partially specified time labeling of a network in a manner consistent 
+with an observed history of information flow.
+
++ Communication in Distributed Networks ->  node-to-node transmissions. If the time labels on the edges of P are monotonically 
+non-decreasing.
++ Epidemiology -> the spread of a disease (or a computer virus, or a rumor) can be investigated by studying the time-respecting 
+paths in a network.
++ Scheduled Transportation Networks -> 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[21] Udayan Khurana and Amol Deshpande. Efficient snapshot retrieval over historical graph data. In 29th IEEE International 
+Conference on Data Engineering, ICDE 2013, Brisbane, Australia, April 8-12, 2013, pages 997–1008, 2013.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: 
+Insights:
 1) 
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[21] Udayan Khurana and Amol Deshpande. Efficient snapshot retrieval over historical graph
-data. In 29th IEEE International Conference on Data Engineering, ICDE 2013, Brisbane,
-Australia, April 8-12, 2013, pages 997–1008, 2013.
-[22] Udayan Khurana and Amol Deshpande. Storing and analyzing historical graph data at scale.
-In Proceedings of the 19th International Conference on Extending Database Technology,
-EDBT 2016, Bordeaux, France, March 15-16, 2016, Bordeaux, France, March 15-16, 2016.,
-pages 65–76, 2016.
+[22] Udayan Khurana and Amol Deshpande. Storing and analyzing historical graph data at scale. In Proceedings of the 19th 
+International Conference on Extending Database Technology, EDBT 2016, Bordeaux, France, March 15-16, 2016, Bordeaux, France, 
+March 15-16, 2016., pages 65–76, 2016.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: 
+Insights:
+1) 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
 [23] Min-Soo Kim and Jiawei Han. A particle-and-density based evolutionary clustering method
 for dynamic networks. PVLDB, 2(1):622–633, 2009.
-16Category II - GraphTempo
-Part 6.A
-Evaggelia Pitoura
 [24] Georgia Koloniari and Evaggelia Pitoura. Partial view selection for evolving social graphs.
 In First International Workshop on Graph Data Management Experiences and Systems,
 GRADES 2013, co-loated with SIGMOD/PODS 2013, New York, NY, USA, June 24, 2013,
@@ -690,9 +711,6 @@ Vancouver, BC, Canada, June 10-12, 2008, pages 93–106, 2008.
 tonomous scalable social networking. In CIDR 2011, Fifth Biennial Conference on Inno-
 vative Data Systems Research, Asilomar, CA, USA, January 9-12, 2011, Online Proceedings,
 pages 85–95, 2011.
-17Category II - GraphTempo
-Part 6.A
-Evaggelia Pitoura
 [37] Peter Macko, Virendra J. Marathe, Daniel W. Margo, and Margo I. Seltzer. LLAMA: efficient
 graph analytics using large multiversioned arrays. In 31st IEEE International Conference on
 Data Engineering, ICDE 2015, Seoul, South Korea, April 13-17, 2015, pages 363–374, 2015.
@@ -734,9 +752,6 @@ cient processing of shortest path queries in evolving graph sequences. Inf. Syst
 [50] Polina Rozenshtein and Aristides Gionis. Temporal pagerank. In Machine Learning and
 Knowledge Discovery in Databases - European Conference, ECML PKDD 2016, Riva del
 Garda, Italy, September 19-23, 2016, Proceedings, Part II, pages 674–689, 2016.
-18Category II - GraphTempo
-Part 6.A
-Evaggelia Pitoura
 [51] Siddhartha Sahu, Amine Mhedhbi, Semih Salihoglu, Jimmy Lin, and M. Tamer Özsu. The
 ubiquity of large graphs and surprising challenges of graph processing. PVLDB, 11(4):420–
 431, 2017.
@@ -774,9 +789,6 @@ graphs. PVLDB, 10(8):877–888, 2017.
 [62] Apache TinkerPop. 2018 (accessed January). http://tinkerpop.apache.org/.
 [63] Paraskevas Tsantarliotis, Evaggelia Pitoura, and Panayiotis Tsaparas. Defining and predicting
 troll vulnerability in online social media. Social Netw. Analys. Mining, 7(1):26:1–26:15, 2017.
-19Category II - GraphTempo
-Part 6.A
-Evaggelia Pitoura
 [64] Jing Wang, Nikos Ntarmos, and Peter Triantafillou. Graphcache: A caching system for graph
 queries. In Proceedings of the 20th International Conference on Extending Database Tech-
 nology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 13–24, 2017.
