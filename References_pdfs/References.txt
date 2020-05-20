@@ -645,7 +645,11 @@ with an observed history of information flow.
 non-decreasing.
 + Epidemiology -> the spread of a disease (or a computer virus, or a rumor) can be investigated by studying the time-respecting 
 paths in a network.
-+ Scheduled Transportation Networks -> 
++ Scheduled Transportation Networks -> strictly time-respecting = if the labels on its edges are increasing. 
+
+** Connectivity problems -> Suppose that a node t has learned a piece of information originally possessed by a node s. 
+Q: : for some value of k, are there k (internally) node-disjoint time-respecting paths from s to t?
+
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
