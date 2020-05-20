@@ -574,17 +574,62 @@ Dedicate distributed graph processing systems (such as Pregel, Giraph++).
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[19] Foteini Katsarou, Nikos Ntarmos, and Peter Triantafillou. Performance and scalability of indexed subgraph query processing 
+[19] (PAPER) Foteini Katsarou, Nikos Ntarmos, and Peter Triantafillou. Performance and scalability of indexed subgraph query processing 
 methods. PVLDB, 8(12):1566–1577, 2015.
 --------------------------------------------------------------------------------------------------------------------------------------
-!!!!! DOWNLOAD AGAIN !!!!!
+
 url: https://eprints.gla.ac.uk/107199/1/107199.pdf
 Insights:
-1) 
+1) Graph data management systems. subgraph query processing; i.e., given a query graph, return all graphs that contain the query.
+2) we identify a set of key factors-parameters, that influence the performance of related methods: namely, the number of nodes 
+per graph, the graph density, the number of distinct labels, the number of graphs in the dataset, and the query graph size.
+3) Grapes, CT-Index, GraphGrepSX, gIndex, Tree+∆, and gCode
+
+- the candidate set is usually much smaller in size than the complete dataset
+- Algorithm Performance: A set of methods is selected to represent different key design decisions with respect to the type 
+of graph features indexed  i.e., paths, trees, cycles, subgraphs) and the method for generating graph features (i.e., based 
+on frequency mining or exhaustive enumeration of graph features).
+- Algorithm Scalability:  The existing work focuses only on performance issues – i.e., time and space comparison of the 
+algorithms – and fails to look at scalability issues – i.e., what is the performance of the algorithm when both the dataset 
+and the graphs grow large and/or more complex.
+- systematic evaluation of performance and scalability: 
+
+2. BACKGROUND
++ 2.1 Definitions -> 
+	- Graphs: undirected graphs with labels on vertices
+	- Graph Isomorphism: Two graphs G = (V, E, L) and G0 = (V0, E0, L0). maps each vertex of G to a vertex of G0(the edges and labels).
+	- Subgraph Isomorphism: subgraph isomorphism is injective and thus there may exist edges in E0 for which there are no 
+	corresponding edges in E(the subgraph).
+	- Graph Density: d = (2 × |E|) / (|V | × (|V | − 1)) , d ∈ [0, 1]
+	- Average Degree (undirected graphs): avgdeg = (2 × |E|) / |V|
+
+3. COMPETING ALGORITHMS
++ gIndex ->  uses a frequent mining approach, with graphstructured features. Stores a graph ID list per feature (no location information).
++ Tree+∆ -> uses a frequent mining approach, but initially only indexes tree-structured features of up to a predefined size. all 
+tree-structured fragments of the query graphs are enumerated and looked up in the index. the algorithm also enumerates simple 
+cycles found in query graph. 
++ gCode -> Enumerates all paths of up to a predefined size. Produces vertex signatures, consisting of three components. 
++ CT-Index -> uses path-, tree- and cycle-structured features.  The canonical labels of all such features are then combined 
+and hashed, producing a fixed-size bit array fingerprint for each graph in the dataset. any location information. 
++ GraphGrepSX -> enumerates all paths up to a maximum length using depth first search and organizes them in a suffix tree. 
++  Grapes -> indexing paths of up to a maximum length. maintains location information. being one of the fastest algorithms regarding 
+query processing times across most of our scenarios
+
+6. LESSONS LEARNED & CONCLUSIONS
+-  As the number of features is superlinear to the size of a graph, the increase of the above two factors leads to a detrimental 
+increase in the indexing time, with the frequent mining techniques being more severely affected.
+- The number of graphs increases the overall complexity only linearly.
+- The increase in the number of distinct labels leads to an easier dataset to index and an easier query workload to process, 
+as it results in fewer occurrences of any given feature and thus a decrease in the false positive ratio of the various algorithms.
+- The size of query graphs affects all methods, even more so when the datasets consist of dense graphs. This effect is more 
+pronounced for frequent mining techniques, even for moderately dense or even sparse graphs.
+
+- The number of subgraphs of size n in a graph is significantly larger than the number of trees of size n, and the trees of 
+size n is significantly larger than the number of paths of size n.
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[20] David Kempe, Jon M. Kleinberg, and Amit Kumar. Connectivity and inference problems for temporal networks. J. Comput. Syst. 
+[20] (PAPER) David Kempe, Jon M. Kleinberg, and Amit Kumar. Connectivity and inference problems for temporal networks. J. Comput. Syst. 
 Sci., 64(4):820–842, 2002.
 --------------------------------------------------------------------------------------------------------------------------------------
 
