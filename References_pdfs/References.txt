@@ -154,6 +154,7 @@ MEDEN uses tight upper bounds of the optimal solution to prune irrelevant time i
 ######################################################################################################################################
 ######################################################################################################################################
 [7] (SURVEY) HongYun Cai, Vincent W. Zheng, and Kevin Chen-Chuan Chang. A comprehensive survey of graph embedding: Problems, techniques, and applications.  IEEE Trans. Knowl. Data Eng., 30(9):1616–1637, 2018.
+--------------------------------------------------------------------------------------------------------------------------------------
 
 url: https://ieeexplore.ieee.org/document/8294302
 Insights: 
@@ -243,9 +244,10 @@ Sometimes multiple techniques are combined in one study.
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[8] Ciro Cattuto, Marco Quaggiotto, André Panisson, and Alex Averbuch. Time-varying social networks in a graph database: a neo4j use case. 
+[8] (PAPER) Ciro Cattuto, Marco Quaggiotto, André Panisson, and Alex Averbuch. Time-varying social networks in a graph database: a neo4j use case. 
 In First International Workshop on Graph Data Management Experiences and Systems, GRADES 2013, co-loated with SIGMOD/PODS 2013, 
 New York, NY, USA, June 24, 2013, page 11, 2013.
+--------------------------------------------------------------------------------------------------------------------------------------
 
 url: https://dl.acm.org/doi/pdf/10.1145/2484425.2484442
 Insights: 
@@ -276,63 +278,322 @@ Edges as undirected and weighted (it generalizes to directed weighted edges and 
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[9] Gabriel Campero Durand, Marcus Pinnecke, David Broneske, and Gunter Saake. Backlogs
-and interval timestamps: Building blocks for supporting temporal queries in graph databases.
-In Proceedings of the Workshops of the EDBT/ICDT 2017 Joint Conference (EDBT/ICDT
-2017), Venice, Italy, March 21-24, 2017., 2017.
+[9] (PAPER) Gabriel Campero Durand, Marcus Pinnecke, David Broneske, and Gunter Saake. Backlogs and interval timestamps: Building blocks for supporting 
+temporal queries in graph databases. In Proceedings of the Workshops of the EDBT/ICDT 2017 Joint Conference (EDBT/ICDT 2017), Venice, Italy, 
+March 21-24, 2017., 2017.
+--------------------------------------------------------------------------------------------------------------------------------------
 
-######################################################################################################################################
-######################################################################################################################################
-######################################################################################################################################
-[10] Wenfei Fan, Jianzhong Li, Shuai Ma, Nan Tang, Yinghui Wu, and Yunpeng Wu. Graph pattern
-matching: From intractable to polynomial time. PVLDB, 3(1):264–275, 2010.
+url: 
+Insights:
+1) To include backlogs in the model we examine two alternatives: (1) global indexes, and (2) using the graph as an index by resorting to 
+timestamp denormalization.
 
-######################################################################################################################################
-######################################################################################################################################
-######################################################################################################################################
-[11] Nathalie T. H. Gayraud, Evaggelia Pitoura, and Panayiotis Tsaparas. Diffusion maximization
-in evolving social networks. In Proceedings of the 2015 ACM on Conference on Online
-Social Networks, COSN 2015, Palo Alto, California, USA, November 2-3, 2015, pages 125–
-135, 2015.
-15Category II - GraphTempo
-Part 6.A
-Evaggelia Pitoura
+2. FUNDAMENTALS
+Description of two major temporal data representation models that have been used for this purpose, interval timestamps and backlogs.
+2.2 Interval timestamps:
++ For instance, consider two temporal objects A and B with timestamps t(A) = [d start , d end ) and t(B) = [d 0 start , d 0 end ). 
+The object A exists before the object B if (d start < d 0 start ) holds. Both objects A and B exist together in a certain time span 
+if also (d end > d 0 start ) holds.
 
-######################################################################################################################################
-######################################################################################################################################
-######################################################################################################################################
-[12] William L. Hamilton, Payal Bajaj, Marinka Zitnik, Dan Jurafsky, and Jure Leskovec. Em-
-bedding logical queries on knowledge graphs. In Advances in Neural Information Processing
-Systems 31: Annual Conference on Neural Information Processing Systems 2018, NeurIPS
-2018, 3-8 December 2018, Montréal, Canada., pages 2030–2041, 2018.
+2.3 Backlogs:
++ It is a list of events ordered by time.
 
+3. TIME IN PROPERTY GRAPHS
+how both time representations could be used for the commonplace task of density calculation. This task requires to count the number of 
+vertices and edges valid at a given timepoint.
+1. Global Indexing. In this alternative, global indexes covering creation and deletion times of items can be used at run-time to efficiently 
+reconstruct ordered sets of backlogs for given periods (Figure 3, with only the timestamped nodes and edges).
+2. Graph as an index. Another alternative is to use the graph as an index in itself (GRAIN), by using a special class of edges –backlog edges,
+ connected to logger meta-vertexes (Figure 3, considering all entities). The collection of backlog edges (going out from the 
+ logger vertexes) serves as a backlog table (Figure 2).
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[13] Wentao Han, Youshan Miao, Kaiwei Li, Ming Wu, Fan Yang, Lidong Zhou, Vijayan Prab-
-hakaran, Wenguang Chen, and Enhong Chen. Chronos: a graph engine for temporal graph
-analysis. In Ninth Eurosys Conference 2014, EuroSys 2014, Amsterdam, The Netherlands,
-April 13-16, 2014, pages 1:1–1:14, 2014.
-[14] Takanori Hayashi, Takuya Akiba, and Ken-ichi Kawarabayashi. Fully dynamic shortest-path
-distance query acceleration on massive networks. In Proceedings of the 25th ACM Interna-
-tional Conference on Information and Knowledge Management, CIKM 2016, Indianapolis,
+[10] (PAPER) Wenfei Fan, Jianzhong Li, Shuai Ma, Nan Tang, Yinghui Wu, and Yunpeng Wu. Graph pattern matching: From intractable to polynomial 
+time. PVLDB, 3(1):264–275, 2010.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://dl.acm.org/doi/pdf/10.14778/1920841.1920878?download=true
+Insights:
+1) an edge denotes the connectivity in a data graph within a predefined number of hops
+2) graph pattern matching can be performed in cubic-time
+3) develop algorithms for incrementally finding matches when data graphs are updated
+4) the revised notion of graph pattern matching allows us to identify communities commonly found in real-world networks
+
+GOAL: find all subgraphs of G that are isomorphic to P (pattern)
+
+2. Graph Pattern Matching Revised:
++ 2.1 Data Graphs and Pattern Graphs -> A pattern graph is defined as P = (V p , E p , f v , f e ), where (1) V p and E p are the set 
+of nodes and the set of directed edges, respectively, as defined for data graphs; (2) f v is a function defined on V p such that 
+for each node u, f v (u) is the predicate of u, defined as a conjunction of atomic formulas of the form A op a; here A denotes an attribute, 
+a is a constant, and op is a comparison operator <, ≤, =, 6 = , >, ≥; (3) f e is a function defined on E p such that for each edge.
++ 2.2 Bounded Graph Simulation -> Consider a data graph G = (V, E, f A ) and a pattern P = (V p , E p , f v , f e ). ... 
++ For any graph G  and pattern P , if P E G, then there is a unique maximum match in G for P.
+
+3. An Algorithm for Graph Pattern Matching
+They present the algorithm. dag(Directed acyclic graph) patterns
+
+Summary: Our algorithms are efficient and scale well with the size of data graphs, and with the size of pattern graphs. Our incremental 
+algorithm efficiently processes batch updates δ when δ is reasonably large.
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[11] (PAPER) Nathalie T. H. Gayraud, Evaggelia Pitoura, and Panayiotis Tsaparas. Diffusion maximization in evolving social networks. In Proceedings 
+of the 2015 ACM on Conference on Online Social Networks, COSN 2015, Palo Alto, California, USA, November 2-3, 2015, pages 125–135, 2015.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://dl.acm.org/doi/pdf/10.1145/2817946.2817965
+Insights: 
+1) we study diffusion on such evolving networks and extend the popular Independent Cascade and Linear Threshold models to account for 
+network evolution.
+2) Introduction of two natural variations, a persistent and a transient one, to capture diffusions of different types.
+
+3. PRELIMINARIES:
++ Evolving graphs -> We model an evolving graph as a sequence of n graphs G = {G 1 , G 2 , ..., G n }, defined over the same set of nodes V 
+, where the set of edges differs between time-stamps. (The union graph (which can also be defined as a multi-graph, or a weighted graph) is the aggregation of the sequence into a single graph. This is a common way to transform an evolving graph into a static one.)
++ Diffusion and network evolution -> nodes are in two states: either active or inactive. Diffusion starts with a set of active nodes A 0 and then proceeds in discrete steps.
++ time = two distinct time-tracks that run in parallel: the graph evolution time, where a time-step is defined by a graph instance in 
+the graph sequence, and the diffusion time, where a time-step is defined by one step in the diffusion process.
+
+* the possibility that the diffusion time runs faster than the evolution time.
+
+(1) Transient diffusion processes, where the effect of a node activation is “local” in time. This models the case where the diffusion 
+capability is short-lived and localized in time; 
+(2) Persistent diffusion processes, where the activation of a node has an effect that lasts beyond a single time instance. This models 
+the case where the diffusion capability can persist over time. 
+
+4. PROBLEM DEFINITION:
++ diffusion maximization problem = there is an item that we want to spread in the network. Our goal is to select a small set of influential 
+nodes in the network that will initiate the diffusion, such that the spread of the item is maximized.
+
++ Problem 1 "Spread Maximization on Evolving Graphs problem" -> Given a sequence of graphs G = {G 1 , G 2 , ..., G n } and an integer k, 
+for a given  diffusion model D, find a set I = {v 1 t 1 , ..., v k k }, v i 6 = v j , of k node instances to be activated, such that 
+σ D (I) is maximized.
+
+5. EVOLVING MODELS:
++ 5.1 Evolving IC Model
+++ 5.1.1 Transient EIC Model -> a node u can activate its neighbors only immediately after the time instance that it 
+becomes active. When a node becomes infected it has a probability of infecting its neighbors, and then it becomes inoculated.
+++ 5.1.2 Persistent EIC Model -> the item to be diffused, and the interest of the nodes in the item are persistent. A node u that becomes
+ active at time t is given a chance to activate another node v at the first time instance after t that u and v become connected.
++ 5.2 Evolving LT Model: each node has a threshold θ v chosen uniformly at random in the interval [0, 1]. If (u, v) is an incoming 
+edge to v, and u is active, we say that (u, v) is live. Node v is activated when the sum of weights over the live edges exceeds the 
+threshold θ v .
+++ 5.2.1 Transient ELT Model -> In this model, the diffusion process is similar to that in the static graph, but the total incoming weight
+ of live edges is computed only over the live edges that are all present in a single graph instance.
+++ 5.2.2 Persistent ELT Model -> assume that influence persists over time. A node accumulates the influence of the active nodes it has 
+met in the past. When the accumulated influence crosses the node’s threshold it becomes activated.
+
+We address two fundamental issues: 
+- (1) How does the timing of the activation of the influencers affect the diffusion spread? -> clearly demonstrate the importance of the
+ activation time of a node.
+- (2) Does the evolution of the network affect the estimation of the spread? -> For any practical application that wants to make decisions 
+based on the size of spread, using the static graph will yield a very poor estimate of the true diffusion on the evolving graph. when 
+using the initiator set obtained for the static graph on the evolving graph, performance is poor
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[12] (PAPER) William L. Hamilton, Payal Bajaj, Marinka Zitnik, Dan Jurafsky, and Jure Leskovec. Embedding logical queries on knowledge graphs. 
+In Advances in Neural Information Processing Systems 31: Annual Conference on Neural Information Processing Systems 2018, NeurIPS 2018, 
+3-8 December 2018, Montréal, Canada., pages 2030–2041, 2018.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://papers.nips.cc/paper/7473-embedding-logical-queries-on-knowledge-graphs.pdf
+Insights: 
+1) low-dimensional embeddings of knowledge graphs is a powerful approach used to predict unobserved or missing edges between entities.
+2) They introduce a framework to efficiently make predictions about conjunctive logical queries
+3) In our approach, they embed graph nodes in a low-dimensional space and represent logical operators as learned geometric operations 
+(e.g., translation, rotation) in this embedding space. By performing logical operations within a low-dimensional embedding space, 
+their approach achieves a time complexity that is linear in the number of query variables.
+4) They develop graph query embeddings (GQEs), an embedding-based framework that can efficiently make predictions about conjunctive queries 
+on incomplete knowledge graphs. The key idea behind GQEs is that we embed graph nodes in a low-dimensional space and represent logical 
+operators as learned geometric operations (e.g., translation, rotation) in this embedding space. After training, we can use the model 
+to predict which nodes are likely to satisfy any valid conjunctive query, even if the query involves unobserved edges.
+
+* Reddit network (e.g., “recommend posts that user A is likely to downvote, but user B is likely to upvote”)
+
+4 Proposed Approach
+- we learn how to embed any conjunctive graph query into a low-dimensional space. They represent logical query operations as geometric 
+operators that are jointly optimized on a low-dimensional embedding space along with a set of node embeddings.
+- the embedding q for any query q can be generated and used to predict the likelihood that a node v satisfies the query q.
+- In particular, we want to generate query embeddings q and node embeddings z v , so that the likelihood or “score” that v ∈ JqK 
+is given by the distance between their respective embeddings: score(q, z u) = q * z u / ||q|| * ||z u||
++ 4.2 Node embeddings -> We assume that every node of type γ has an associated binary feature vector x_u ∈ Z^m_γ , and we compute the
+node embedding as Z_u = Z_γ * x_u / |x_u|
+where Z_γ ∈ R^d×m_γ is a trainable embedding matrix. In our experiments, the x u vectors are one-hot indicator vectors (e.g., each 
+node gets its own embedding) except for posts in Reddit, where the features are binary indicators of what words occur in the post.
+
++ 4.4 Model training -> The geometric projection operator P, intersection operator I, and node embedding parameters can be trained 
+using stochastic gradient descent on a max-margin loss. 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[14] (PAPER) Takanori Hayashi, Takuya Akiba, and Ken-ichi Kawarabayashi. Fully dynamic shortest-path distance query acceleration on massive 
+networks. In Proceedings of the 25th ACM International Conference on Information and Knowledge Management, CIKM 2016, Indianapolis, 
 IN, USA, October 24-28, 2016, pages 1533–1542, 2016.
-[15] Wenyu Huo and Vassilis J. Tsotras. Efficient temporal shortest path queries on evolving
-social graphs. In Conference on Scientific and Statistical Database Management, SSDBM
-’14, Aalborg, Denmark, June 30 - July 02, 2014, pages 38:1–38:4, 2014.
-[16] Christian S. Jensen and Richard T. Snodgrass. Temporal data management. IEEE Trans.
-Knowl. Data Eng., 11(1):36–44, 1999.
-[17] Xiaoen Ju, Dan Williams, Hani Jamjoom, and Kang G. Shin. Version traveler: Fast and
-memory-efficient version switching in graph processing systems. In 2016 USENIX Annual
-Technical Conference, USENIX ATC 2016, Denver, CO, USA, June 22-24, 2016., pages 523–
-536, 2016.
-[18] Martin Junghanns, André Petermann, Martin Neumann, and Erhard Rahm. Management and
-analysis of big graph data: Current systems and open challenges. In Handbook of Big Data
-Technologies, pages 457–505. 2017.
-[19] Foteini Katsarou, Nikos Ntarmos, and Peter Triantafillou. Performance and scalability of
-indexed subgraph query processing methods. PVLDB, 8(12):1566–1577, 2015.
-[20] David Kempe, Jon M. Kleinberg, and Amit Kumar. Connectivity and inference problems for
-temporal networks. J. Comput. Syst. Sci., 64(4):820–842, 2002.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://dl.acm.org/doi/pdf/10.1145/2983323.2983731
+Insights:
+1)  the first algorithm that can process exact distance queries on fully dynamic billion-scale networks besides trivial non-indexing 
+algorithms, which combines an online bidirectional breadth-first search (BFS) and an offline indexing method for handling 
+billion-scale networks in memory.
+2) bit-parallel shortest-path trees to maintain sets of shortest paths
+3) on large-scale social networks with over 1B edges, the proposed method enables us to answer distance queries in around 1 ms, on average
+
++ Optimized Bidirectional BFS: We present new search expansion heuristics that consider the extremely small average distance of 
+vertices in complex networks. When we find a shortest path while conducting our bidirectional BFS, we can immediately terminate 
+searches without verifying whether the distance of a found path is truly the shortest distance.
++ Acceleration Based on Bit-Parallel Shortest-Path Trees: We construct shortest-path trees (SPTs) rooted at vertices with the 
+highest degrees for further speedup of the querying time of the proposed method. We maintain multiple SPTs with bit-parallelized 
+form and reduce the space requirement of each SPT by around four times. Moreover, we present an index size reduction technique to 
+further reduce the data structure size in order to handle billion-scale networks in memory, which discards the information of the 
+bit-parallel SPTs from some of the vertices and quickly recovers this information if we need it for answering distance queries.
++ Fully Dynamic Update Procedure: We also present fully dynamic update procedures of bit-parallel SPTs. For each bit-parallel SPT, 
+we simulate a partial bitparallel BFS as with the update procedure for an SPT. These update procedures are carefully designed to 
+correctly propagate changes in the bit-parallelized information of SPTs
+
+3. PRELIMINARIES
+We also study efficient methods to reflect dynamic updates of a graph, such as edge insertion and edge deletion, into the index for 
+distance queries.
+
+4. PROPOSED METHOD
+4.1 Optimized Bidirectional BFS
++ 4.1.1 Search Expansion Heuristics -> The drawback of this algorithm is that we have to continue the search, even if we have 
+already found a shortest path, in order to verify that it truly is a shortest path.
++ Our idea is to increase d s or d t in each iteration.
++ 4.1.2 Landmark-Based Acceleration -> avoiding scanning of neighbors of vertices having an extremely large number of neighbors.
+4.2 Bit-Parallel SPTs
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[15] (SHORT PAPER) Wenyu Huo and Vassilis J. Tsotras. Efficient temporal shortest path queries on evolving social graphs. In Conference on 
+Scientific and Statistical Database Management, SSDBM ’14, Aalborg, Denmark, June 30 - July 02, 2014, pages 38:1–38:4, 2014.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://dl.acm.org/doi/pdf/10.1145/2618243.2618282
+Insights:
+1)  Our shortest-path queries are “temporal”: they can refer to any time-point or time-interval in the graph’s evolution, and 
+corresponding valid answers should be returned. 
+2)  extend the traditional Dijkstra’s algorithm to compute shortest-path distance(s) for a time-point or a time-interval. 
+3)  index techniques such as Contraction Hierarchies (CH)
+
+2. TEMPORALLY EVOLVING GRAPH
+- directed or undirected
+- If G is a weighted graph, an edge is represented as a triplet <u, v, w(of the edge) >
+- Each node is represented in a triplet as <v, ts(v), te(v)> which implies that node v appears in the graph snapshots during the 
+time interval [ts(v), te(v)).
+- <u, v, w, ts(e), te(e)> 
+- Definition 1. A Time Point Shortest Path query TPSP(TEG, tq, vs, vt) returns the distance of a path p(e1,…,ek) as a sequence of 
+edges for query time tq, which is the shortest-path from source node vs to target node vt, (both vs and vt are temporally valid at
+query time tq), while all edges in p are valid at query time
+- Definition 2. A Time Interval Shortest Path “all” query TISPall(TEG, q, vs, vt) returns a set of distances for paths P = {p1,…,pm} 
+which contains all the shortest distance paths from source node vs to target node vt during the query time interrval.
+
+3. FUNDAMENTAL SOLUTION
+
+4. SPEED-UP TECHNIQUES 
+- Certain absolute ordering of the vertices is established in the graph.
+
+5. TEMPORAL PARTITIONING
+- The GS model is optimal for time-point querying, but it has huge storage overhead and is not efficient for time-interval querying. 
+- The TEG model is optimal in space (linear) and efficient for time-interval querying (especially large intervals)
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[18] (SURVEY) Martin Junghanns, André Petermann, Martin Neumann, and Erhard Rahm. Management and analysis of big graph data: Current systems 
+and open challenges. In Handbook of Big Data Technologies, pages 457–505. 2017.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://www.researchgate.net/profile/Erhard_Rahm/publication/314210031_Management_and_Analysis_of_Big_Graph_Data_Current_Systems_and_Open_Challenges/links/5c308507a6fdccd6b592fbbd/Management-and-Analysis-of-Big-Graph-Data-Current-Systems-and-Open-Challenges.pdf
+Insights:
+1) We discuss graph database systems, distributed graph processing systems such as Google Pregel and its variations, and graph 
+dataflow approaches based on Apache Spark and Flink.
+
++ The flexible and efficient management and analysis of “big graph data” holds high promise. At the same time it poses a number of 
+challenges for suitable implementations in order to meet the following requirements:
+- Powerful graph data model ->  provide a set of powerful graph operators to process and analyze graph data, e.g., to find 
+specific patterns or to aggregate and summarize graph data.
+- Powerful query and analysis capabilities -> 
+- High performance and scalability -> requires the utilization of distributed clusters and in-memory graph processing. 
+- Persistent graph storage and transaction support -> It is also desirable to provide OLTP (Online Transaction Processing) functionality 
+with ACID transactions for modifying graph data
+- Ease of use/graph visualization -> 
+
+2 Graph Databases
++ 2.2 Graph Data Models -> 
++ 2.3 Query Language Support -> 
+	- adjacency: reachability queries identify if and how two vertices are connected
+	- reachability: from a start vertex within a certain number of traversal steps or via vertices and edges meeting given 
+	traversal constraints
+	- pattern matching: retrieves subgraphs (embeddings) isomorphic to a given pattern graph. It requires no specific start point 
+	but can be  applied to the whole graph
+	- aggregation queries: derive aggregated, scalar values from graph structures
+
+	(SPARQL, Gremlin, Cypher query languages)
+
+3 Graph Processing
+Dedicate distributed graph processing systems (such as Pregel, Giraph++).
++ 3.1 General Architecture -> 
+	- hash or range-based partitioning on vertex labels
+	- vertex-centric model: a worker node stores for each of its vertices the vertex value, all outgoing edges including 
+	their values and vertex identifiers (ids) of all incoming edges
++ 3.2 Think Like a Vertex ->
+	- Google Pregel (vertex compute function): each vertex only has a local view of itself and its immediate neighbors.
+		3 steps:
+		1. Read all incoming messages,
+		2. Update the internal vertex state (i.e., its value)
+		3. Send information (i.e., messages) to its neighbors
+	- Akka, or Quasar -> r information about the edges of the graph
+	- Aggregation: Certain graph algorithms need global knowledge in terms of aggregated values such as the number of vertices 
+	in the graph or the total sum of all vertex values.
+	- Reducing network communication:  reduce the number of messages between different worker nodes.  If a worker node has 
+	multiple messages addressing the same vertex, they can potentially be combined into a single message.
+	- Gather-Apply-Scatter (GAS) model (Chaos): 
+		1. Aggregates messages addressing the same vertex on the sending worker nodes.
+		2. The apply function has the incoming messages as input and updates the vertex state.
+		3. The scatter function has the vertex state as input and produces the outgoing messages.
+	The computation is parallelized across the vertices.
+	- Asynchronous execution: worker nodes do not spend time waiting for other workers to finish (such as Ja-be-Ja, Signal/Collect 
+	and GraphChi). It is possible that the message with the true minimum is delayed so that there are additional steps finding 
+	the minimum between larger values before the true minimum is found.
+	- Graph mutation: modify the graph structure during execution. Giraph supports adding and removing vertices and edges, 
+	GraphLab only allows addition
++ 3.3 Think Like a Graph -> 
+	- On each worker node n we then create a copy of each vertex that is not internal to n, but is directly connected to 
+	an internal vertex of n. These vertices are called boundary vertices and represent the cached vertex values of copied vertices.
+ 
+4 Graph Dataflow Systems -> graph analytics on distributed dataflow systems using Apache Flink
+	+ 4.1 Apache Flink -> supports the declarative definition and distributed execution of analytical programs on batch and 
+	streaming dataflows. The basic abstractions of such programs are datasets and transformations!
+	+ 4.2 Apache Flink Gelly ->  The provided data model is a directed, labeled multigraph where vertex and edge labels are 
+	generic, i.e., vertices and edges can carry arbitrary user-defined payload ranging from basic data types such as numbers 
+	and strings to complex domain objects.
+
+5 Gradoop (framework, Graph data management and analytics with Hadoop)
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[19] Foteini Katsarou, Nikos Ntarmos, and Peter Triantafillou. Performance and scalability of indexed subgraph query processing 
+methods. PVLDB, 8(12):1566–1577, 2015.
+--------------------------------------------------------------------------------------------------------------------------------------
+!!!!! DOWNLOAD AGAIN !!!!!
+url: https://eprints.gla.ac.uk/107199/1/107199.pdf
+Insights:
+1) 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[20] David Kempe, Jon M. Kleinberg, and Amit Kumar. Connectivity and inference problems for temporal networks. J. Comput. Syst. 
+Sci., 64(4):820–842, 2002.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: shorturl.at/zAEJR
+Insights:
+1) 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
 [21] Udayan Khurana and Amol Deshpande. Efficient snapshot retrieval over historical graph
 data. In 29th IEEE International Conference on Data Engineering, ICDE 2013, Brisbane,
 Australia, April 8-12, 2013, pages 997–1008, 2013.
@@ -398,6 +659,9 @@ Simple building blocks of complex networks. Science, 298(5594):824–827, 2004.
 [40] Vera Zaychik Moffitt and Julia Stoyanovich. Temporal graph algebra. In Proceedings of The
 16th International Symposium on Database Programming Languages, DBPL 2017, Munich,
 Germany, September 1, 2017, pages 10:1–10:12, 2017.
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
 [41] Vera Zaychik Moffitt and Julia Stoyanovich. Towards sequenced semantics for evolving
 graphs. In Proceedings of the 20th International Conference on Extending Database Tech-
 nology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 446–449, 2017.
