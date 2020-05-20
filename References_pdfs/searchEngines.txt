@@ -41,7 +41,80 @@ what (entity, id) changed where (property) and how (new value). (timestamp, id, 
 calculate the difference between two consecutive dumps. 
 	+ Dealing with timestamps: • Transaction time is the time when the change entered the database, optionally marked with a timestamp. 
 	• Valid time is the time recorded for a record and stored in the database. An example is the release date of an album. 
-	+ Modeling decisions: 
+	+ Modeling decisions: transforming input data to the change-cube there are two basic decisions to be made: what is the entity (id) 
+	and what is the property? 
+	+ A Measure for Volatility: measures the amount or degree of change of an object. we need to decide how to count changes in fields 
+	that no longer exist in the current version. 
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[13] (PAPER) Wentao Han, Youshan Miao, Kaiwei Li, Ming Wu, Fan Yang, Lidong Zhou, Vijayan Prabhakaran, Wenguang Chen, and Enhong Chen. 
+Chronos: a graph engine for temporal graph analysis. In Ninth Eurosys Conference 2014, EuroSys 2014, Amsterdam, The Netherlands, 
+April 13-16, 2014, pages 1:1–1:14, 2014.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://dl.acm.org/doi/pdf/10.1145/2592798.2592799
+Insights:
+1) understand temporal characteristics of social interactions on a time-evolving social graph
+2) Chronos is a storage (Locality) and execution engine designed and optimized specifically for running in-memory iterative graph computation 
+on temporal graphs
+
+- Chronos is a parallel in-memory graph engine designed to enable efficient temporal graph mining both on multi-core machines and 
+in distributed settings.
+
+2. Temporal Graph Mining Overview
++ addition of a vertex or deletion of an edge
++ Each iteration includes a scatter phase that propagates a local value (e.g., a rank) associated with a vertex to its neighbors, 
+followed by a gather phase that accumulates updates from neighbors to compute the new local value of a vertex.
++ for each snapshot, involves propagation among neighbors within that snapshot.
++ One obvious choice is to schedule iterative computation for each snapshot, while an alternative is to run iterative computation 
+on multiple snapshots together.
+
+3. Chronos Design
+Chronos proposes Locality-Aware Batch Scheduling (LABS), which makes two fundamental design choices: 
+1) one is to favor time locality over structure locality when laying out a temporal graph; 
+2) match scheduled access pattern with data locality.
+
+- 3.2 In-Memory Data Structure
++ The in-memory data structure maintains the reconstructed states at the specified snapshots and discards any unnecessary 
+fields (e.g., timestamps) stored in the on-disk layout.
++ locality in the graph structure (places the data one snapshot after another), or locality in the time dimension (the vertex data in 
+the same snapshot is scattered in this layout, compared to the structure-locality layout)
+
+- 3.3 Locality Aware Batch Scheduling
++ snapshots are known in advance, for a group of N snapshots
+
+4. Chronos On-Disk Temporal Graph
+how the system stores temporal graphs on disk?
++ 4.1 Data Model of the On-Disk Temporal Graph -> 
+	- an activity involves the addition, deletion, and modification of vertices, edges, or their associated data at a particular 
+	point in time.
+	- Chronos introduces the notion of snapshot groups
+	- a snapshot group is stored as edge files (for edge-related states and activities) and vertex files (for vertex-related ones)
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[16] (PAPER) Christian S. Jensen and Richard T. Snodgrass. Temporal data management. IEEE Trans. Knowl. Data Eng., 11(1):36–44, 1999.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: http://timecenter.cs.aau.dk/TimeCenterPublications/TR-17.pdf
+Insights:
+1) It is about SQL, quering and time intervals
+
+5 Adding Time to Query Languages
++ The reality is that in conventional query languages like SQL, temporal queries can be expressed, but with great difficulty.
+######################################################################################################################################
+######################################################################################################################################
+######################################################################################################################################
+[17] Xiaoen Ju, Dan Williams, Hani Jamjoom, and Kang G. Shin. Version traveler: Fast and memory-efficient version switching in 
+graph processing systems. In 2016 USENIX Annual Technical Conference, USENIX ATC 2016, Denver, CO, USA, June 22-24, 2016.,  pages 523– 536, 2016.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+url: https://www.usenix.org/system/files/conference/atc16/atc16_paper-ju.pdf
+Insights:
+1) We present Version Traveler (VT), a graph processing system featuring fast and memory-efficient version switching. 
+2) VT achieves fast version switching by (i) representing differences among versions as deltas and (ii) constructing the next version 
+by integrating the in-memory graph representation of the current version with the delta(s) relating the two versions. 
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
