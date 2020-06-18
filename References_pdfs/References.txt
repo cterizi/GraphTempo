@@ -676,7 +676,17 @@ directed graph whose lowest level corresponds to the snapshots of the network ov
 explicitly stored), and the interior nodes correspond to graphs constructed by combining the lower 
 level graphs (these are typically not valid snapshots as of any specific time point). 
 
-GraphPool (data structure) = 
+GraphPool (data structure) =  exploits the commonalities in the snapshots that are currently in memory, 
+by overlaying them on a single graph data structure. 
+
++ A. Graph Data Model
+Each node has attributes. New attributes may be added at any time. 
+The edge contains the information about whether it is a directed edge or an undirected edge.
+Actions:  creation or deletion of an edge or node, or change in an attribute value of a node or 
+an edge.
+
+
+
 
 ######################################################################################################################################
 ######################################################################################################################################
