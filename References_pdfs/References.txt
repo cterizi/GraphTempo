@@ -653,13 +653,31 @@ Q: : for some value of k, are there k (internally) node-disjoint time-respecting
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
-[21] Udayan Khurana and Amol Deshpande. Efficient snapshot retrieval over historical graph data. In 29th IEEE International 
-Conference on Data Engineering, ICDE 2013, Brisbane, Australia, April 8-12, 2013, pages 997–1008, 2013.
+[21] Udayan Khurana and Amol Deshpande. Efficient snapshot retrieval over historical graph data. In 29th IEEE International  Conference on Data Engineering, ICDE 2013, Brisbane, Australia, April 8-12, 2013, 
+pages 997–1008, 2013.
 --------------------------------------------------------------------------------------------------------------------------------------
 
-url: 
+url: https://ieeexplore.ieee.org/abstract/document/6544892?casa_token=NO5LnPTskbMAAAAA:1EGCg3_
+MYDRp9GAGnuL-l7BZ202UhdKaM9J35vm5kia5X6P3o4VZdbj7pX7gBsf0Op4si5WMBw
 Insights:
-1) 
+1) It is a distributed graph database system (DeltaGraph)
+2) The system can maintain and index auxiliary information
+3) The system execute queries like subgraph pattern matching over historical data
+4) GraphPool data structure 
+
+- low-cost storage
+- efficient retrieval of the historical network information
+
+GOAL: retrieve in memory one or more historical snapshots of the information network as of 
+specified time points.
+
+Previous systems load the entire graph into memory prior to execution. However, DeltaGraph  is a rooted,
+directed graph whose lowest level corresponds to the snapshots of the network over time (that are not
+explicitly stored), and the interior nodes correspond to graphs constructed by combining the lower 
+level graphs (these are typically not valid snapshots as of any specific time point). 
+
+GraphPool (data structure) = 
+
 ######################################################################################################################################
 ######################################################################################################################################
 ######################################################################################################################################
